@@ -1,4 +1,4 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useCallback, useEffect, useRef } from 'react';
 import { SceneProvider } from './context/SceneContext.jsx';
 import Navbar        from './components/Navbar.jsx';
 import HeroSection   from './components/HeroSection.jsx';
@@ -27,20 +27,31 @@ export default function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  /* Cursor glow — direct DOM manipulation to avoid 60fps re-renders */
+  const cursorRef = useRef();
+  useEffect(() => {
+    const move = (e) => {
+      if (cursorRef.current) {
+        cursorRef.current.style.left = e.clientX + 'px';
+        cursorRef.current.style.top  = e.clientY + 'px';
+      }
+    };
+    window.addEventListener('mousemove', move, { passive: true });
+    return () => window.removeEventListener('mousemove', move);
+  }, []);
+
   const toggleTheme = () => {
     const next = theme === 'dark' ? 'light' : 'dark';
     setTheme(next);
     document.documentElement.setAttribute('data-theme', next);
   };
 
-  /* Open chat with a pre-sent tech question */
   const openAIWithTech = (tech) => {
     setAiQuery(`What is ${tech}?`);
     setAiMode('tech');
     setShowAI(true);
   };
 
-  /* Open chat normally (no pre-fill) */
   const openAI = () => {
     setAiQuery(null);
     setAiMode('knowledge');
@@ -55,57 +66,65 @@ export default function App() {
 
   return (
     <>
-    {loading && <LoadingScreen onComplete={handleLoadDone} />}
-    <div className="scroll-progress" style={{ width: `${scrollPct}%` }} />
-    <SceneProvider>
-      <Navbar onOpenAI={openAI} theme={theme} onToggleTheme={toggleTheme} />
+      {loading && <LoadingScreen onComplete={handleLoadDone} />}
 
-      <HeroSection onTechClick={openAIWithTech} />
+      {/* Scroll progress */}
+      <div className="scroll-progress" style={{ width: `${scrollPct}%` }} />
 
-      <main className="portfolio-content">
-        <AboutSection />
-        <ExperienceSection onTechClick={openAIWithTech} />
-        <ProjectsSection   onTechClick={openAIWithTech} />
-        <SkillsSection     onTechClick={openAIWithTech} />
-        <footer className="portfolio-footer">
-          <div>Aditya Dey · Gen AI Engineer · aditya2002dey@gmail.com</div>
-          <div style={{ marginTop: '6px', opacity: 0.6 }}>
-            Built with React · {new Date().getFullYear()}
-          </div>
-        </footer>
-      </main>
+      {/* Cursor glow */}
+      <div className="cursor-glow" ref={cursorRef} />
 
-      {/* Mobile bottom nav */}
-      <div className="mobile-controls">
-        {['about', 'experience', 'projects', 'skills'].map(id => (
+      {/* Film grain */}
+      <div className="film-grain" aria-hidden="true" />
+
+      <SceneProvider>
+        <Navbar onOpenAI={openAI} theme={theme} onToggleTheme={toggleTheme} />
+
+        <HeroSection onTechClick={openAIWithTech} />
+
+        <main className="portfolio-content">
+          <AboutSection />
+          <ExperienceSection onTechClick={openAIWithTech} />
+          <ProjectsSection   onTechClick={openAIWithTech} />
+          <SkillsSection     onTechClick={openAIWithTech} />
+          <footer className="portfolio-footer">
+            <div>Aditya Dey · Gen AI Engineer · aditya2002dey@gmail.com</div>
+            <div style={{ marginTop: '6px', opacity: 0.6 }}>
+              Built with React · {new Date().getFullYear()}
+            </div>
+          </footer>
+        </main>
+
+        {/* Mobile bottom nav */}
+        <div className="mobile-controls">
+          {['about', 'experience', 'projects', 'skills'].map(id => (
+            <button
+              key={id}
+              className="mob-btn"
+              onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              {id.charAt(0).toUpperCase() + id.slice(1)}
+            </button>
+          ))}
           <button
-            key={id}
             className="mob-btn"
-            onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
+            style={{ borderColor: 'var(--orange)', color: 'var(--orange)' }}
+            onClick={openAI}
           >
-            {id.charAt(0).toUpperCase() + id.slice(1)}
+            ◈ AI
           </button>
-        ))}
-        <button
-          className="mob-btn"
-          style={{ borderColor: 'var(--orange)', color: 'var(--orange)' }}
-          onClick={openAI}
-        >
-          ◈ AI
-        </button>
-      </div>
+        </div>
 
-      {/* AI Chat FAB */}
-      <button className="ai-fab" onClick={openAI} title="Ask ADBOT">◈</button>
+        <button className="ai-fab" onClick={openAI} title="Ask ADBOT">◈</button>
 
-      {showAI && (
-        <AIChat
-          onClose={closeAI}
-          initialQuery={aiQuery}
-          initialMode={aiMode}
-        />
-      )}
-    </SceneProvider>
+        {showAI && (
+          <AIChat
+            onClose={closeAI}
+            initialQuery={aiQuery}
+            initialMode={aiMode}
+          />
+        )}
+      </SceneProvider>
     </>
   );
 }

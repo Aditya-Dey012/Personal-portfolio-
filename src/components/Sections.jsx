@@ -1,7 +1,45 @@
+import { useRef, useCallback } from 'react';
 import { personal, skills, experience, projects, education } from '../data/portfolio.js';
 import useReveal from '../hooks/useReveal.js';
+import ScrambleText from './ScrambleText.jsx';
 
 const FEAT_COLORS = ['#ff6b35', '#ffd700', '#4ade80'];
+
+/* 3D perspective tilt — desktop only, no-op on touch */
+function TiltCard({ children, className, style }) {
+  const ref = useRef();
+
+  const onMove = useCallback((e) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = (e.clientX - rect.left) / rect.width  - 0.5;
+    const y = (e.clientY - rect.top)  / rect.height - 0.5;
+    el.style.transition = 'box-shadow 0.12s ease';
+    el.style.transform  = `perspective(700px) rotateY(${x * 10}deg) rotateX(${-y * 8}deg) translateZ(8px)`;
+    el.style.boxShadow  = `${-x * 14}px ${y * 10}px 34px rgba(255,107,53,0.13)`;
+  }, []);
+
+  const onLeave = useCallback(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.transition = 'transform 0.55s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.3s ease';
+    el.style.transform  = '';
+    el.style.boxShadow  = '';
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={style}
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+    >
+      {children}
+    </div>
+  );
+}
 
 function ProfilePhoto() {
   return (
@@ -20,7 +58,6 @@ function ProfilePhoto() {
   );
 }
 
-/* Clickable tech tag — opens AI chat with "What is X?" */
 function TechTag({ label, onTechClick, className = 'tag orange' }) {
   if (!onTechClick) return <span className={className}>{label}</span>;
   return (
@@ -43,7 +80,7 @@ export function AboutSection() {
     <section id="about" className="section reveal-section" ref={ref}>
       <div className="section-eyebrow">◈ About Me</div>
       <h2 className="section-title">
-        Building Production-Grade<br />
+        <ScrambleText>Building Production-Grade</ScrambleText><br />
         <span>AI Systems</span>
       </h2>
 
@@ -105,7 +142,7 @@ export function ExperienceSection({ onTechClick }) {
     <section id="experience" className="section reveal-section" ref={ref}>
       <div className="section-eyebrow">◆ Experience</div>
       <h2 className="section-title">
-        Where I've <span>Built</span>
+        <ScrambleText>Where I've </ScrambleText><span>Built</span>
       </h2>
 
       <div className="exp-timeline">
@@ -145,7 +182,7 @@ export function ProjectsSection({ onTechClick }) {
     <section id="projects" className="section reveal-section" ref={ref}>
       <div className="section-eyebrow">⬡ Side Projects</div>
       <h2 className="section-title">
-        Personal <span>Builds</span>
+        <ScrambleText>Personal </ScrambleText><span>Builds</span>
       </h2>
       <p style={{ fontSize: '14px', color: 'var(--text-dim)', marginBottom: '36px', fontFamily: 'var(--font-mono)' }}>
         Work projects are detailed in the Experience section above. These are my personal explorations.
@@ -153,7 +190,11 @@ export function ProjectsSection({ onTechClick }) {
 
       <div className="side-grid" style={{ gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))' }}>
         {projects.map((p, i) => (
-          <div key={p.slug} className="side-card" style={{ borderTop: `2px solid ${FEAT_COLORS[i % FEAT_COLORS.length]}44` }}>
+          <TiltCard
+            key={p.slug}
+            className="side-card stagger-item"
+            style={{ borderTop: `2px solid ${FEAT_COLORS[i % FEAT_COLORS.length]}44`, '--i': i }}
+          >
             <div className="side-card-name">{p.name}</div>
             <p className="side-card-desc">{p.description}</p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px', marginBottom: '12px' }}>
@@ -166,7 +207,7 @@ export function ProjectsSection({ onTechClick }) {
                 ↗ GitHub
               </a>
             )}
-          </div>
+          </TiltCard>
         ))}
       </div>
     </section>
@@ -179,21 +220,16 @@ export function SkillsSection({ onTechClick }) {
     <section id="skills" className="section reveal-section" ref={ref}>
       <div className="section-eyebrow">⚡ Tech Stack</div>
       <h2 className="section-title">
-        What I <span>Work With</span>
+        <ScrambleText>What I </ScrambleText><span>Work With</span>
       </h2>
 
       <div className="skills-grid">
-        {Object.entries(skills).map(([cat, items]) => (
-          <div key={cat} className="skill-row">
+        {Object.entries(skills).map(([cat, items], i) => (
+          <div key={cat} className="skill-row stagger-item" style={{ '--i': i }}>
             <div className="skill-cat-label">{cat}</div>
             <div className="skill-tags">
               {items.map(s => (
-                <TechTag
-                  key={s}
-                  label={s}
-                  onTechClick={onTechClick}
-                  className="tag"
-                />
+                <TechTag key={s} label={s} onTechClick={onTechClick} className="tag" />
               ))}
             </div>
           </div>

@@ -1,5 +1,33 @@
-import { useState, useEffect, lazy, Suspense } from 'react';
+import { useState, useEffect, useRef, useCallback, lazy, Suspense } from 'react';
 import { personal } from '../data/portfolio.js';
+
+/* Magnetic pull — on touch devices it's a no-op */
+function MagneticWrap({ children }) {
+  const ref = useRef();
+
+  const onMove = useCallback((e) => {
+    const el = ref.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 24;
+    const y = ((e.clientY - rect.top)  / rect.height - 0.5) * 24;
+    el.style.transition = 'transform 0.1s ease';
+    el.style.transform  = `translate(${x}px, ${y}px)`;
+  }, []);
+
+  const onLeave = useCallback(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.transition = 'transform 0.5s cubic-bezier(0.34,1.56,0.64,1)';
+    el.style.transform  = '';
+  }, []);
+
+  return (
+    <span ref={ref} style={{ display: 'inline-block' }} onMouseMove={onMove} onMouseLeave={onLeave}>
+      {children}
+    </span>
+  );
+}
 
 const HeroOrbs = lazy(() => import('../scene/HeroOrbs.jsx'));
 
@@ -14,11 +42,42 @@ const ROLES = [
 const TECH = ['LangGraph', 'FAISS', 'FastAPI', 'LangChain', 'PySpark', 'MLflow', 'AWS', 'Groq', 'Next.js'];
 
 const STATS = [
-  { num: '3+',  label: 'Production\nAI Systems' },
-  { num: '12+', label: 'Projects\nShipped' },
-  { num: '7+',  label: 'LangGraph\nAgents Built' },
-  { num: 'NIT', label: 'Mizoram\nM.Tech' },
+  { to: 3,   suffix: '+', label: 'Production\nAI Systems' },
+  { to: 12,  suffix: '+', label: 'Projects\nShipped' },
+  { to: 7,   suffix: '+', label: 'LangGraph\nAgents Built' },
+  { text: 'NIT',          label: 'Mizoram\nM.Tech' },
 ];
+
+/* Counts from 0 → to when it enters the viewport */
+function CountUp({ to, suffix }) {
+  const [val,  setVal]    = useState(0);
+  const ref     = useRef();
+  const started = useRef(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting && !started.current) {
+        started.current = true;
+        obs.disconnect();
+        const dur   = 1500;
+        const begin = performance.now();
+        const tick  = (now) => {
+          const p     = Math.min((now - begin) / dur, 1);
+          const eased = 1 - Math.pow(1 - p, 3); // ease-out cubic
+          setVal(Math.round(eased * to));
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      }
+    }, { threshold: 0.8 });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [to]);
+
+  return <span ref={ref}>{val}{suffix}</span>;
+}
 
 function Typewriter() {
   const [idx,       setIdx]       = useState(0);
@@ -76,15 +135,19 @@ export default function HeroSection({ onTechClick }) {
           </p>
 
           <div className="hero-cta">
-            <a href={`mailto:${personal.email}`} className="hero-btn-primary">
-              Get in touch
-            </a>
-            <button
-              className="hero-btn-ghost"
-              onClick={() => document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              View my work ↓
-            </button>
+            <MagneticWrap>
+              <a href={`mailto:${personal.email}`} className="hero-btn-primary">
+                Get in touch
+              </a>
+            </MagneticWrap>
+            <MagneticWrap>
+              <button
+                className="hero-btn-ghost"
+                onClick={() => document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                View my work ↓
+              </button>
+            </MagneticWrap>
           </div>
 
           <div className="hero-tags">
@@ -106,9 +169,13 @@ export default function HeroSection({ onTechClick }) {
 
           {/* Stats strip */}
           <div className="hero-stats-strip">
-            {STATS.map(s => (
-              <div key={s.num} className="hero-stat-item">
-                <div className="hero-stat-n">{s.num}</div>
+            {STATS.map((s, i) => (
+              <div key={i} className="hero-stat-item">
+                <div className="hero-stat-n">
+                  {s.to !== undefined
+                    ? <CountUp to={s.to} suffix={s.suffix} />
+                    : s.text}
+                </div>
                 <div className="hero-stat-l">{s.label}</div>
               </div>
             ))}

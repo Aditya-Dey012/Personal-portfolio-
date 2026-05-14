@@ -738,19 +738,80 @@ canvas { display: block; }
   transform: translateY(0);
 }
 
+/* Staggered children — each card/row gets --i set inline */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.55s cubic-bezier(0.16,1,0.3,1),
+              transform 0.55s cubic-bezier(0.16,1,0.3,1);
+  transition-delay: calc(var(--i, 0) * 75ms + 200ms);
+}
+.revealed .stagger-item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   CURSOR GLOW
+   ============================================================ */
+.cursor-glow {
+  position: fixed;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,107,53,0.07) 0%, transparent 68%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9990;
+  transition: left 0.12s ease, top 0.12s ease;
+  will-change: left, top;
+}
+@media (hover: none) { .cursor-glow { display: none; } }
+
+/* ============================================================
+   FILM GRAIN
+   ============================================================ */
+.film-grain {
+  position: fixed;
+  inset: 0;
+  z-index: 9989;
+  pointer-events: none;
+  opacity: 0.032;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 200px 200px;
+  animation: grain-flicker 0.35s steps(1) infinite;
+}
+@keyframes grain-flicker {
+  0%  { background-position:   0px   0px; }
+  10% { background-position: -30px -50px; }
+  20% { background-position:  20px  40px; }
+  30% { background-position: -60px  20px; }
+  40% { background-position:  10px -30px; }
+  50% { background-position: -20px  60px; }
+  60% { background-position:  50px -20px; }
+  70% { background-position: -10px  30px; }
+  80% { background-position:  30px -60px; }
+  90% { background-position: -50px  10px; }
+}
+
 /* ============================================================
    PROJECT CARD HOVER GLOW
    ============================================================ */
 .side-card {
-  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+  transition: border-color 0.25s;
+  will-change: transform;
 }
+/* border glow on hover — transform handled by TiltCard JS */
 .side-card:hover {
   border-color: rgba(255,107,53,0.45);
-  transform: translateY(-4px);
-  box-shadow: 0 8px 32px rgba(255,107,53,0.12), 0 0 0 1px rgba(255,107,53,0.1);
 }
 .side-card-name { transition: color 0.2s; }
 .side-card:hover .side-card-name { color: var(--orange); }
+/* disable tilt on touch devices */
+@media (hover: none) {
+  .side-card:hover { transform: none !important; box-shadow: none !important; }
+}
 
 /* ============================================================
    EXPERIENCE — VERTICAL TIMELINE

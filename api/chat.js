@@ -85,7 +85,7 @@ If unrelated to Aditya, politely redirect.`;
     ...messages.slice(-8),
   ];
 
-  const temperature = isTechMode ? 0.4 : 0.3;
+  const temperature = isTechMode ? 0.4 : 0.2;
   const max_tokens  = isTechMode ? 200  : 800;
 
   try {

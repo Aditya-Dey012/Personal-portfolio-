@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+.env.local
+.DS_Store
+*.log
+odt_extract/
+CCPP_report.zip
+CCPP_AI_System_Technical_Report.odt
+Aditya_CV.pdf
+prompt.txt

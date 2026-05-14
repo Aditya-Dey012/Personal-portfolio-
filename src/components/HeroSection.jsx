@@ -129,10 +129,6 @@ export default function HeroSection({ onTechClick }) {
             Building&nbsp;<Typewriter />
           </div>
 
-          <p className="hero-bio">
-            I design and ship production-grade AI systems — multi-agent orchestration,
-            semantic retrieval, and LLM-powered analytics that actually scale.
-          </p>
 
           <div className="hero-cta">
             <MagneticWrap>

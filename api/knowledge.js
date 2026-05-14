@@ -67,19 +67,23 @@ Type: Full-time
 At Nexturn, Aditya leads the development of production-grade AI systems. Three major systems:
 
 --- PROJECT 1: AI Analytics RAG System ---
-Stack: LangGraph · FAISS · AWS Athena · React · Plotly · SSE · FastAPI
-Description: Multi-agent pipeline that converts natural language business questions into SQL queries
-executed against AWS Athena data warehouse.
+Stack: LangGraph · FAISS · AWS Athena · GPT-4o · React · Plotly · SSE · FastAPI
+Description: Core specialty is a production LangGraph multi-agent state machine orchestrating 5
+specialized GPT-4o-powered agents that convert natural language business questions into SQL,
+charts, and narrative insights against an AWS Athena data warehouse.
 Key contributions:
-- Architected a multi-agent LangGraph StateGraph pipeline with specialized agents for NL-to-SQL
-  query generation, schema resolution, query validation, and result interpretation
+- Architected the LangGraph multi-agent state machine with 5 specialized agents: Orchestrator
+  (intent classification), Context Resolver (query rewriting), Data Agent (NL-to-SQL),
+  Summarization Agent (narrative insights), and Chart Agent (Plotly code generation)
+- GPT-4o powers all 5 LLM tasks: intent classification (DATA_ONLY / SUMMARIZE / CHART /
+  SUMMARIZE_AND_CHART), follow-up query rewriting, NLP-to-SQL generation, narrative insight
+  summarisation, and executable Plotly chart code generation
 - Built FAISS-based semantic schema retrieval — agents ground SQL generation against live Athena
   table metadata fetched and indexed at startup
 - Engineered a React + Plotly dashboard with SSE-based real-time streaming — queries stream
   results token-by-token into interactive, metric-aware charts (bar, line, scatter auto-selected)
-- Implemented automated AI-generated PDF reports summarising analytics sessions with narrative
-  explanations of insights
-- Designed the LangGraph state machine with fallback routing, error recovery, and per-node
+- Automated PDF report generation using ReportLab with AI-generated narrative summaries from
+  the Summarization Agent; designed LangGraph state machine with fallback routing and per-node
   MLflow tracing for full observability
 
 --- PROJECT 2: AI-Powered Recruitment Management System ---

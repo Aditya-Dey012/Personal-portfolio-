@@ -1,22 +1,45 @@
-# Aditya Dey — Portfolio
+# Aditya Dey — Personal Portfolio
 
-Personal portfolio for Aditya Dey, Gen AI Engineer.
+> Gen AI Engineer · Multi-agent systems · LLM-powered analytics · Full-stack AI
+
+Live portfolio built with React + Vite, featuring a 3D interactive hero, a terminal command interface, and an embedded RAG-powered AI assistant (ADBOT) backed by Groq Llama 3.1.
+
+---
 
 ## Stack
 
-- **Frontend** — React + Vite, Three.js / @react-three/fiber
-- **AI Chat** — Groq (Llama 3.1 8B), LangChain-style RAG, SSE streaming
-- **Backend** — Vercel Serverless Functions (Node.js)
-- **3D Visualization** — LangGraph-style directed graph with animated nodes, edges, and flowing particles
+| Layer | Tech |
+|---|---|
+| Frontend | React 18, Vite, Three.js, @react-three/fiber |
+| AI Assistant | Groq Llama-3.1-8b-instant, RAG (semantic chunking + retrieval), SSE streaming |
+| Backend | Node.js serverless (Vercel Functions) |
+| 3D Scene | React Three Fiber — directed LangGraph-style node graph with particle flow |
+
+---
 
 ## Features
 
 - **Cinematic loading screen** — perspective grid, CRT scanlines, glitch title reveal
-- **3D hero graph** — 11 nodes (LangGraph, FAISS, ChromaDB, Agents, etc.) with smooth sphere geometry, glow halos, and real-time particle flow
-- **ADBOT v1.0** — AI assistant powered by Groq Llama 3.1, with RAG knowledge base about Aditya's work and a 5-question session limit
-- **Clickable tech tags** — every technology tag opens the AI chat and auto-asks "What is X?" with a 2–3 bullet answer
-- **Chat history sidebar** — previous sessions archived and restorable within the same browser session
-- **Dark theme** — warm dark tones with orange accents, fully responsive on mobile and desktop
+- **3D hero graph** — 11 nodes (LangGraph, FAISS, Agents, etc.) with animated edges and real-time particle flow
+- **ADBOT v1.0** — RAG AI assistant powered by Groq Llama-3.1-8b-instant
+  - Knowledge base chunked into semantic segments; relevant context retrieved per query
+  - Streams responses token-by-token over SSE
+  - Grounded answers — draws only from retrieved portfolio knowledge
+  - 5-question session limit; chat history sidebar with session restore
+- **Terminal interface** — custom commands (`whoami`, `experience`, `projects`, `cat`, `neofetch`, `matrix`) with tab completion and command history
+- **Clickable tech tags** — every stack tag opens ADBOT and auto-asks "What is X?"
+- **Scroll animations** — scroll-triggered reveals, magnetic UI elements, card glow, progress bar
+- **Fully responsive** — dark theme with warm orange accents, mobile + desktop
+
+---
+
+## Projects Showcased
+
+- **AI Analytics RAG System** — Production LangGraph multi-agent state machine (5 GPT-4o-powered agents: Orchestrator, Context Resolver, Data Agent, Summarization Agent, Chart Agent) with FAISS schema retrieval, SSE-streamed React + Plotly dashboard, and automated PDF reports
+- **AI-Powered Recruitment Management System** — GPT-4o-mini resume parsing, PII masking, SharePoint integration, SendGrid scheduling
+- **SPOC** — 7-agent LangGraph monitoring platform for a 350 MW power plant with FAISS document search and real-time Next.js dashboard
+
+---
 
 ## Local Development
 
@@ -38,12 +61,14 @@ npm run dev
 
 Open [http://localhost:5173](http://localhost:5173)
 
+---
+
 ## Project Structure
 
 ```
 ├── api/
-│   ├── chat.js          # Groq streaming endpoint (RAG + tech mode)
-│   └── knowledge.js     # RAG knowledge base + system prompts
+│   ├── chat.js          # Groq streaming endpoint — RAG retrieval + SSE
+│   └── knowledge.js     # Semantic knowledge chunks + system prompts
 ├── public/
 │   ├── profile.png
 │   └── Aditya_CV.pdf
@@ -51,23 +76,27 @@ Open [http://localhost:5173](http://localhost:5173)
 │   ├── components/
 │   │   ├── LoadingScreen.jsx   # Cinematic boot screen
 │   │   ├── HeroSection.jsx     # Hero with typewriter + 3D canvas
-│   │   ├── AIChat.jsx          # ADBOT chat window + sidebar
+│   │   ├── AIChat.jsx          # ADBOT chat window + session sidebar
 │   │   ├── Navbar.jsx
 │   │   └── Sections.jsx        # About, Experience, Projects, Skills
 │   ├── scene/
-│   │   └── HeroOrbs.jsx        # Three.js directed graph visualization
+│   │   └── HeroOrbs.jsx        # Three.js LangGraph-style directed graph
 │   ├── data/
 │   │   └── portfolio.js        # All content — skills, experience, projects
 │   └── App.jsx
-├── dev-server.js        # Local shim for Vercel API functions
+├── dev-server.js        # Local shim for Vercel serverless functions
 └── vite.config.js
 ```
+
+---
 
 ## Deployment (Vercel)
 
 1. Connect this repo to [Vercel](https://vercel.com)
 2. Add environment variable: `GROQ_API_KEY = your_key`
 3. Deploy — Vite build + serverless functions are auto-detected
+
+---
 
 ## Contact
 

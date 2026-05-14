@@ -36,13 +36,13 @@ export const experience = [
     projects: [
       {
         name: 'AI Analytics RAG System',
-        stack: ['LangGraph', 'FAISS', 'AWS Athena', 'React', 'Plotly', 'SSE'],
+        stack: ['LangGraph', 'GPT-4o', 'FAISS', 'AWS Athena', 'React', 'Plotly', 'SSE'],
         bullets: [
-          'Architected a multi-agent LangGraph pipeline orchestrating specialized agents for NL-to-SQL query generation, schema resolution, and result interpretation',
+          'Core specialty: a production LangGraph multi-agent state machine orchestrating 5 specialized agents — Orchestrator, Context Resolver, Data Agent, Summarization Agent, and Chart Agent — with intent-based routing, fallback recovery, and per-node MLflow tracing',
+          'GPT-4o powers all 5 LLM tasks across the pipeline: intent classification (DATA_ONLY / SUMMARIZE / CHART / SUMMARIZE_AND_CHART), follow-up query rewriting, NLP-to-SQL generation, narrative insight summarisation, and executable Plotly chart code generation',
           'Built FAISS-based semantic schema retrieval so agents ground SQL generation against live Athena table metadata',
           'Engineered a React + Plotly dashboard with SSE-based real-time streaming — queries stream results token-by-token into interactive charts',
-          'Implemented automated AI-generated PDF reports summarising analytics sessions with narrative explanations',
-          'Designed the LangGraph state machine with fallback routing, error recovery, and per-node MLflow tracing',
+          'Automated PDF report generation using ReportLab, with AI-generated narrative summaries produced by the Summarization Agent',
         ],
       },
       {
@@ -98,6 +98,20 @@ export const experience = [
 ];
 
 export const projects = [
+  {
+    name: 'This Portfolio',
+    slug: 'portfolio',
+    stack: ['React', 'Vite', 'Three.js', 'React Three Fiber', 'Groq', 'Node.js'],
+    description: 'Designed and built this portfolio — a 3D interactive React/Vite site with a RAG-powered AI assistant that answers questions about experience and projects using Groq Llama-3.1-8b-instant.',
+    github: 'https://github.com/Aditya-Dey012',
+    type: 'side',
+    bullets: [
+      'Built this portfolio itself — React + Vite frontend with React Three Fiber 3D particle backgrounds, scroll-triggered animations, magnetic UI interactions, and a terminal-style command interface',
+      'Embedded a RAG-powered AI assistant (ADBOT): knowledge base is chunked into semantic segments, relevant context is retrieved per query, and Groq\'s Llama-3.1-8b-instant streams answers token-by-token over SSE',
+      'The RAG layer ensures grounded, context-accurate responses — the assistant draws only from retrieved portfolio knowledge rather than hallucinating details',
+      'Terminal interface supports custom commands (whoami, experience, projects, cat, neofetch, matrix) with tab completion and command history',
+    ],
+  },
   {
     name: 'Prompt Optimization Engine',
     slug: 'prompt-optimization-engine',

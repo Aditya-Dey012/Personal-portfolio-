@@ -1,6 +1,6 @@
 # Aditya Dey — Portfolio
 
-Personal portfolio for Aditya Dey, Gen AI Engineer based in Bengaluru.
+Personal portfolio for Aditya Dey, Gen AI Engineer.
 
 ## Stack
 

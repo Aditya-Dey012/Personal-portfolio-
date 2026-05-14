@@ -99,11 +99,11 @@ export const experience = [
 
 export const projects = [
   {
-    name: 'This Portfolio',
+    name: 'AI-Powered Portfolio',
     slug: 'portfolio',
     stack: ['React', 'Vite', 'Three.js', 'React Three Fiber', 'Groq', 'Node.js'],
     description: 'Designed and built this portfolio — a 3D interactive React/Vite site with a RAG-powered AI assistant that answers questions about experience and projects using Groq Llama-3.1-8b-instant.',
-    github: 'https://github.com/Aditya-Dey012',
+    github: 'https://github.com/Aditya-Dey012/Personal-portfolio-.git',
     type: 'side',
     bullets: [
       'Built this portfolio itself — React + Vite frontend with React Three Fiber 3D particle backgrounds, scroll-triggered animations, magnetic UI interactions, and a terminal-style command interface',
@@ -117,7 +117,7 @@ export const projects = [
     slug: 'prompt-optimization-engine',
     stack: ['MLflow', 'LangChain', 'FastAPI', 'SQLite', 'Plotly'],
     description: 'LLMOps system that auto-rewrites and evaluates LLM prompts using MLflow GEPA optimizer. Tracks prompt versions, token usage, and cost across iterations with Plotly dashboards.',
-    github: 'https://github.com/Aditya-Dey012',
+    github: 'https://github.com/Aditya-Dey012/mlflow-GenAI.git',
     type: 'side',
   },
   {
@@ -125,7 +125,7 @@ export const projects = [
     slug: 'movie-recommendation',
     stack: ['Python', 'Scikit-learn', 'Streamlit', 'TMDB API'],
     description: 'Content-based movie recommender using cosine similarity on NLP-processed features. Interactive Streamlit app with live poster fetching via TMDB API.',
-    github: 'https://github.com/Aditya-Dey012',
+    github: 'https://github.com/Aditya-Dey012/Movie-Recomendation-System-.git',
     type: 'side',
   },
   {
@@ -133,7 +133,7 @@ export const projects = [
     slug: 'facial-emotion-detection',
     stack: ['Keras/TensorFlow', 'OpenCV', 'CNN'],
     description: 'Real-time emotion classifier detecting 7 emotions from webcam feed. CNN trained on Kaggle FER dataset; 70% test accuracy.',
-    github: 'https://github.com/Aditya-Dey012',
+    github: 'https://github.com/Aditya-Dey012/Emotion-Detection-.git',
     type: 'side',
   },
   {
@@ -141,7 +141,7 @@ export const projects = [
     slug: 'music-genre-classification',
     stack: ['Apache Kafka', 'PySpark', 'Random Forest', 'Power BI'],
     description: 'End-to-end ML pipeline with real-time Kafka streaming, distributed PySpark processing, and interactive Power BI dashboards for genre insights.',
-    github: 'https://github.com/Aditya-Dey012',
+    github: 'https://github.com/Aditya-Dey012/MUSIC-GENRE-ANALYSIS-PREDICTION.git',
     type: 'side',
   },
   {
@@ -149,7 +149,7 @@ export const projects = [
     slug: 'text-detection',
     stack: ['OpenCV', 'Pytesseract', 'Python'],
     description: 'OCR system for extracting text from images and live video streams using Haar Cascade preprocessing and Tesseract engine.',
-    github: 'https://github.com/Aditya-Dey012',
+    github: 'https://github.com/Aditya-Dey012/Text-Detection-.git',
     type: 'side',
   },
   {
@@ -157,7 +157,7 @@ export const projects = [
     slug: 'gui-calculator',
     stack: ['Python', 'Tkinter'],
     description: 'Graphical calculator with clean UI supporting arithmetic and mathematical operations.',
-    github: 'https://github.com/Aditya-Dey012',
+    github: 'https://github.com/Aditya-Dey012/Gui-Calculator.git',
     type: 'side',
   },
   {
@@ -165,7 +165,32 @@ export const projects = [
     slug: 'interactive-dictionary',
     stack: ['Python', 'JSON'],
     description: 'CLI-based dictionary with definitions, synonyms, and related info powered by a structured JSON store.',
-    github: 'https://github.com/Aditya-Dey012',
+    github: 'https://github.com/Aditya-Dey012/An-Interactive-Dictyionary.git',
+    type: 'side',
+  },
+  {
+    name: 'Instagram Profile Analyzer',
+    slug: 'instagram-profile-analyzer',
+    stack: ['Streamlit', 'Gemini 1.5 Flash', 'Instaloader', 'Plotly', 'Pandas'],
+    description: 'AI-powered Instagram analytics tool — scrapes public profiles via Instaloader, runs Gemini 1.5 Flash analysis across content strategy, engagement, and brand identity, and visualises post performance with interactive Plotly charts.',
+    github: 'https://github.com/Aditya-Dey012/Instagram_profile_analyzer.git',
+    type: 'side',
+  },
+  {
+    name: 'Cinema OS',
+    slug: 'cinema-os',
+    stack: ['Streamlit', 'Gemini 2.5 Flash', 'RAG', 'Python', 'Google Gemini API'],
+    description: 'AI-powered story production studio — dual-panel Streamlit app combining Gemini File Search RAG for document Q&A with cited answers, and Gemini 2.5 Flash for generating multiple cinematic story variations from a single idea.',
+    github: 'https://github.com/Aditya-Dey012/cinemaos.git',
+    type: 'side',
+  },
+  {
+    name: 'Nike Shopping App — Figma Prototype',
+    slug: 'nike-app-figma',
+    stack: ['Figma', 'UI/UX Design', 'Prototyping'],
+    description: 'High-fidelity mobile shopping app prototype for Nike — covers home, product listings, search, cart, wishlist, and user profile with a clean, modern UI.',
+    github: 'https://github.com/Aditya-Dey012/Nike-App-in-Figma.git',
+    figma: 'https://www.figma.com/proto/xAoHL4zSCq4xvt8ocRjmHV/app?node-id=0-1&t=zrUmH9fGvH1qhSOR-1',
     type: 'side',
   },
 ];

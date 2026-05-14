@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { SceneProvider } from './context/SceneContext.jsx';
 import Navbar        from './components/Navbar.jsx';
 import HeroSection   from './components/HeroSection.jsx';
@@ -14,6 +14,18 @@ export default function App() {
   const [theme,    setTheme]    = useState('dark');
 
   const handleLoadDone = useCallback(() => setLoading(false), []);
+
+  /* Scroll progress bar */
+  const [scrollPct, setScrollPct] = useState(0);
+  useEffect(() => {
+    const onScroll = () => {
+      const el  = document.documentElement;
+      const pct = (el.scrollTop / (el.scrollHeight - el.clientHeight)) * 100;
+      setScrollPct(Math.min(100, pct));
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   const toggleTheme = () => {
     const next = theme === 'dark' ? 'light' : 'dark';
@@ -44,6 +56,7 @@ export default function App() {
   return (
     <>
     {loading && <LoadingScreen onComplete={handleLoadDone} />}
+    <div className="scroll-progress" style={{ width: `${scrollPct}%` }} />
     <SceneProvider>
       <Navbar onOpenAI={openAI} theme={theme} onToggleTheme={toggleTheme} />
 

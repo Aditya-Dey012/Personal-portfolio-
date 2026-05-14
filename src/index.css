@@ -711,6 +711,96 @@ canvas { display: block; }
 }
 
 /* ============================================================
+   SCROLL PROGRESS BAR
+   ============================================================ */
+.scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--orange-dim), var(--orange), var(--gold));
+  box-shadow: 0 0 8px rgba(255,107,53,0.7);
+  z-index: 9998;
+  transition: width 0.1s linear;
+  pointer-events: none;
+}
+
+/* ============================================================
+   SCROLL REVEAL ANIMATIONS
+   ============================================================ */
+.reveal-section {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.7s cubic-bezier(0.16,1,0.3,1),
+              transform 0.7s cubic-bezier(0.16,1,0.3,1);
+}
+.reveal-section.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   PROJECT CARD HOVER GLOW
+   ============================================================ */
+.side-card {
+  transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+}
+.side-card:hover {
+  border-color: rgba(255,107,53,0.45);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 32px rgba(255,107,53,0.12), 0 0 0 1px rgba(255,107,53,0.1);
+}
+.side-card-name { transition: color 0.2s; }
+.side-card:hover .side-card-name { color: var(--orange); }
+
+/* ============================================================
+   EXPERIENCE — VERTICAL TIMELINE
+   ============================================================ */
+.exp-timeline {
+  position: relative;
+  padding-left: 28px;
+}
+/* vertical spine */
+.exp-timeline::before {
+  content: '';
+  position: absolute;
+  left: 7px; top: 8px; bottom: 8px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--orange), var(--border) 80%, transparent);
+}
+
+.exp-job {
+  position: relative;
+  margin-bottom: 52px;
+}
+/* dot on timeline for each job */
+.exp-job::before {
+  content: '';
+  position: absolute;
+  left: -25px; top: 12px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 0 3px rgba(255,107,53,0.18), 0 0 10px rgba(255,107,53,0.4);
+  z-index: 1;
+}
+
+.exp-project {
+  margin-bottom: 28px;
+  padding: 18px 20px;
+  border: 1px solid var(--border);
+  border-left: 2px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+  transition: border-color 0.22s, box-shadow 0.22s, transform 0.22s;
+}
+.exp-project:hover {
+  border-color: rgba(255,107,53,0.4);
+  border-left-color: var(--orange);
+  box-shadow: 0 4px 24px rgba(255,107,53,0.08);
+  transform: translateX(3px);
+}
+
+/* ============================================================
    NAVBAR
    ============================================================ */
 .navbar {

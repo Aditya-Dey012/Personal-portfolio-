@@ -1,4 +1,5 @@
 import { personal, skills, experience, projects, education } from '../data/portfolio.js';
+import useReveal from '../hooks/useReveal.js';
 
 const FEAT_COLORS = ['#ff6b35', '#ffd700', '#4ade80'];
 
@@ -37,8 +38,9 @@ function TechTag({ label, onTechClick, className = 'tag orange' }) {
 }
 
 export function AboutSection() {
+  const ref = useReveal();
   return (
-    <section id="about" className="section">
+    <section id="about" className="section reveal-section" ref={ref}>
       <div className="section-eyebrow">◈ About Me</div>
       <h2 className="section-title">
         Building Production-Grade<br />
@@ -98,45 +100,49 @@ export function AboutSection() {
 }
 
 export function ExperienceSection({ onTechClick }) {
+  const ref = useReveal();
   return (
-    <section id="experience" className="section">
+    <section id="experience" className="section reveal-section" ref={ref}>
       <div className="section-eyebrow">◆ Experience</div>
       <h2 className="section-title">
         Where I've <span>Built</span>
       </h2>
 
-      {experience.map(job => (
-        <div key={job.slug} className="exp-job">
-          <div className="exp-job-header">
-            <div className="exp-job-logo">{job.company[0]}</div>
-            <div className="exp-job-info">
-              <div className="exp-job-role">{job.role}</div>
-              <div className="exp-job-meta">{job.company} · {job.period} · {job.location}</div>
-            </div>
-          </div>
-
-          {job.projects.map(p => (
-            <div key={p.name} className="exp-project">
-              <div className="exp-project-name">{p.name}</div>
-              <div className="exp-stack">
-                {p.stack.map(s => (
-                  <TechTag key={s} label={s} onTechClick={onTechClick} />
-                ))}
+      <div className="exp-timeline">
+        {experience.map(job => (
+          <div key={job.slug} className="exp-job">
+            <div className="exp-job-header">
+              <div className="exp-job-logo">{job.company[0]}</div>
+              <div className="exp-job-info">
+                <div className="exp-job-role">{job.role}</div>
+                <div className="exp-job-meta">{job.company} · {job.period} · {job.location}</div>
               </div>
-              <ul className="exp-bullets-list">
-                {p.bullets.map((b, i) => <li key={i}>{b}</li>)}
-              </ul>
             </div>
-          ))}
-        </div>
-      ))}
+
+            {job.projects.map(p => (
+              <div key={p.name} className="exp-project">
+                <div className="exp-project-name">{p.name}</div>
+                <div className="exp-stack">
+                  {p.stack.map(s => (
+                    <TechTag key={s} label={s} onTechClick={onTechClick} />
+                  ))}
+                </div>
+                <ul className="exp-bullets-list">
+                  {p.bullets.map((b, i) => <li key={i}>{b}</li>)}
+                </ul>
+              </div>
+            ))}
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
 
 export function ProjectsSection({ onTechClick }) {
+  const ref = useReveal();
   return (
-    <section id="projects" className="section">
+    <section id="projects" className="section reveal-section" ref={ref}>
       <div className="section-eyebrow">⬡ Side Projects</div>
       <h2 className="section-title">
         Personal <span>Builds</span>
@@ -168,8 +174,9 @@ export function ProjectsSection({ onTechClick }) {
 }
 
 export function SkillsSection({ onTechClick }) {
+  const ref = useReveal();
   return (
-    <section id="skills" className="section">
+    <section id="skills" className="section reveal-section" ref={ref}>
       <div className="section-eyebrow">⚡ Tech Stack</div>
       <h2 className="section-title">
         What I <span>Work With</span>

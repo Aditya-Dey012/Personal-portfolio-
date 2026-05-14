@@ -127,16 +127,27 @@ export default function AIChat({ onClose, initialQuery = null, initialMode = 'kn
     if (initialQuery && !initialSent.current) {
       initialSent.current = true;
       // eslint-disable-next-line no-use-before-define
-      sendMsg(initialQuery, initialMode);
+      sendMsg(initialQuery, initialMode, true);
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const sendMsg = useCallback(async (text, modeOverride = 'knowledge') => {
+  const sendMsg = useCallback(async (text, modeOverride = 'knowledge', fromButton = false) => {
     const msg = (text || input).trim();
     if (!msg || loading) return;
     if (msg.toLowerCase() === 'exit')  { onClose(); return; }
     if (msg.toLowerCase() === 'clear') { newChat(); return; }
+
+    /* Block free-text — only button-triggered queries allowed */
+    if (!fromButton) {
+      setMsgs(prev => [
+        ...prev,
+        { role: 'user', content: msg },
+        { role: 'assistant', content: `Sorry, I can only answer questions about Aditya's work and projects.\n\nUse the suggestion buttons above to explore, or reach out directly:\n✉ aditya2002dey@gmail.com` },
+      ]);
+      setInput('');
+      return;
+    }
 
     /* Question limit */
     if (getCount() >= MAX_QUESTIONS) {
@@ -295,12 +306,12 @@ export default function AIChat({ onClose, initialQuery = null, initialMode = 'kn
           {isFirstSession && !loading && (
             <div className="ai-suggestions">
               {SUGGESTIONS.map(s => (
-                <button key={s} className="ai-sug" onClick={() => sendMsg(s)}>{s}</button>
+                <button key={s} className="ai-sug" onClick={() => sendMsg(s, 'knowledge', true)}>{s}</button>
               ))}
             </div>
           )}
 
-          <div className="ai-hint">Enter to send · Esc to close · &apos;clear&apos; to reset</div>
+          <div className="ai-hint">Use the suggestion buttons above · Esc to close</div>
 
           <div className="ai-input-area">
             <span className="ai-input-prefix">you &gt;</span>
@@ -310,7 +321,7 @@ export default function AIChat({ onClose, initialQuery = null, initialMode = 'kn
               value={input}
               onChange={e => setInput(e.target.value)}
               onKeyDown={onKey}
-              placeholder="Ask about Aditya's projects, skills, experience…"
+              placeholder="Use the buttons above to ask about Aditya…"
               disabled={loading}
               autoComplete="off"
               spellCheck={false}

@@ -161,16 +161,19 @@ export default function AIChat({ onClose, initialQuery = null, initialMode = 'kn
     setStream('');
 
     try {
-      const res = await fetch('/api/chat', {
-        method:  'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          messages: newMsgs
-            .filter(m => !(m.role === 'assistant' && m.content === WELCOME))
-            .map(m => ({ role: m.role, content: m.content })),
-          mode: modeOverride,
+      const [res] = await Promise.all([
+        fetch('/api/chat', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            messages: newMsgs
+              .filter(m => !(m.role === 'assistant' && m.content === WELCOME))
+              .map(m => ({ role: m.role, content: m.content })),
+            mode: modeOverride,
+          }),
         }),
-      });
+        new Promise(resolve => setTimeout(resolve, 3000)),
+      ]);
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({ error: `HTTP ${res.status}` }));

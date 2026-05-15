@@ -6,7 +6,7 @@
 export const KNOWLEDGE_CHUNKS = [
   {
     id: 'personal',
-    tags: ['personal', 'who', 'name', 'about', 'contact', 'location', 'email', 'phone', 'dob', 'born', 'age'],
+    tags: ['personal', 'who', 'name', 'about', 'contact', 'location', 'email', 'phone', 'dob', 'born', 'age', 'linkedin', 'github', 'instagram', 'whatsapp', 'social', 'profile', 'link', 'number'],
     content: `
 PERSONAL INFORMATION
 Name: Aditya Dey
@@ -18,6 +18,8 @@ Phone: +91 6909485604
 GitHub (Personal): https://github.com/Aditya-Dey012
 GitHub (Work): https://github.com/adityanexturn
 LinkedIn: https://linkedin.com/in/aditya-dey-8144b7202
+Instagram: https://www.instagram.com/_mr.dey_762
+WhatsApp: +91 6909485604
 
 Bio: Aditya is a Gen AI Engineer with deep expertise in building multi-agent RAG systems,
 LLM-powered analytics platforms, and full-stack AI applications. He thrives at the intersection
@@ -286,7 +288,7 @@ LinkedIn: linkedin.com/in/aditya-dey-8144b7202
   },
 ];
 
-export const TECH_SYSTEM_PROMPT = `You are ADBOT v1.0, embedded in Aditya Dey's portfolio.
+export const TECH_SYSTEM_PROMPT = `You are ADBOT, embedded in Aditya Dey's portfolio.
 A visitor clicked a technology tag. Give a VERY short answer — 2 to 3 bullet points max.
 
 Format (strictly):
@@ -296,7 +298,7 @@ Format (strictly):
 
 No intro, no outro. Bullets only. Under 60 words total.`;
 
-export const SYSTEM_PROMPT = `You are ADBOT v1.0, the personal AI assistant embedded in Aditya Dey's portfolio website.
+export const SYSTEM_PROMPT = `You are ADBOT, the personal AI assistant embedded in Aditya Dey's portfolio website.
 Your sole purpose is to answer questions about Aditya Dey — his projects, skills, experience, and background.
 
 STRICT RULE: If the question is not about Aditya Dey, his work, or his tech stack, respond with exactly:

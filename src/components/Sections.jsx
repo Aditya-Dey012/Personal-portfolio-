@@ -1,5 +1,7 @@
-import { useRef, useCallback } from 'react';
-import { personal, skills, experience, projects, education } from '../data/portfolio.js';
+import { useRef, useCallback, useState } from 'react';
+import emailjs from '@emailjs/browser';
+import { personal, skills, experience, projects, education, hobbies, languages } from '../data/portfolio.js';
+import { playClick } from '../utils/sounds.js';
 import useReveal from '../hooks/useReveal.js';
 import ScrambleText from './ScrambleText.jsx';
 
@@ -99,8 +101,9 @@ export function AboutSection() {
             <div className="about-card-label">Get in touch</div>
             <div className="about-contact">
               <a href={`mailto:${personal.email}`} className="contact-link">✉ {personal.email}</a>
-              <a href={personal.github} target="_blank" rel="noreferrer" className="contact-link">⌥ github.com/Aditya-Dey012</a>
-              <a href={personal.linkedin} target="_blank" rel="noreferrer" className="contact-link">⊛ LinkedIn Profile</a>
+              <a href={personal.github}    target="_blank" rel="noreferrer" className="contact-link">⌥ github.com/Aditya-Dey012</a>
+              <a href={personal.linkedin}  target="_blank" rel="noreferrer" className="contact-link">⊛ LinkedIn Profile</a>
+              <a href={personal.instagram} target="_blank" rel="noreferrer" className="contact-link">◉ Instagram</a>
               <span className="contact-link" style={{ color: 'var(--text-dim)', cursor: 'default' }}>📍 {personal.location}</span>
             </div>
           </div>
@@ -127,9 +130,30 @@ export function AboutSection() {
           <hr className="divider-line" style={{ margin: '20px 0' }} />
 
           <div className="about-card-label">Resume</div>
-          <a href="/Aditya_CV.pdf" target="_blank" rel="noreferrer" className="dl-resume-btn">
+          <a href="/Aditya_CV.pdf" target="_blank" rel="noreferrer" className="dl-resume-btn" onClick={playClick}>
             ↓ Download Resume
           </a>
+
+          <hr className="divider-line" style={{ margin: '20px 0' }} />
+
+          <div className="about-card-label">Languages</div>
+          <div className="about-lang-list">
+            {languages.map(l => (
+              <div key={l.name} className="about-lang-item">
+                <span className="about-lang-name">{l.name}</span>
+                <span className="about-lang-level">{l.level}</span>
+              </div>
+            ))}
+          </div>
+
+          <hr className="divider-line" style={{ margin: '20px 0' }} />
+
+          <div className="about-card-label">Beyond the terminal</div>
+          <div className="about-hobbies">
+            {hobbies.map(h => (
+              <span key={h} className="tag" style={{ background: 'var(--surface3, var(--surface2))', color: 'var(--text-dim)', borderColor: 'var(--border)' }}>{h}</span>
+            ))}
+          </div>
         </div>
       </div>
     </section>
@@ -209,6 +233,87 @@ export function ProjectsSection({ onTechClick }) {
             )}
           </TiltCard>
         ))}
+      </div>
+    </section>
+  );
+}
+
+export function ContactSection() {
+  const ref     = useReveal();
+  const formRef = useRef();
+  const [status,  setStatus]  = useState('idle'); // idle | sending | success | error
+  const [errMsg,  setErrMsg]  = useState('');
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+    try {
+      await emailjs.sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        formRef.current,
+        { publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY },
+      );
+      setStatus('success');
+      formRef.current.reset();
+    } catch (err) {
+      setErrMsg(err?.text || 'Something went wrong. Try emailing directly.');
+      setStatus('error');
+    }
+  };
+
+  return (
+    <section id="contact" className="section reveal-section" ref={ref}>
+      <div className="section-eyebrow">✉ Contact</div>
+      <h2 className="section-title">
+        <ScrambleText>Let&apos;s </ScrambleText><span>Talk</span>
+      </h2>
+
+      <div className="contact-grid">
+        <div className="contact-info">
+          <p className="contact-blurb">
+            Open to full-time roles, freelance AI projects, and interesting collaborations.
+            Drop a message and I&apos;ll get back within 24 hours.
+          </p>
+          <div className="contact-links-stack">
+            <a href={`mailto:${personal.email}`} className="contact-link">✉ {personal.email}</a>
+            <a href={personal.linkedin}  target="_blank" rel="noreferrer" className="contact-link">⊛ LinkedIn</a>
+            <a href={personal.github}    target="_blank" rel="noreferrer" className="contact-link">⌥ GitHub</a>
+            <a href={personal.instagram} target="_blank" rel="noreferrer" className="contact-link">◉ Instagram</a>
+            <span className="contact-link" style={{ cursor: 'default', color: 'var(--text-dim)' }}>📍 {personal.location}</span>
+          </div>
+        </div>
+
+        <form ref={formRef} className="contact-form" onSubmit={handleSubmit} noValidate>
+          <div className="cf-field">
+            <label className="cf-label">Name</label>
+            <input  className="cf-input" name="from_name"  type="text"  placeholder="Your name"  required disabled={status === 'sending'} />
+          </div>
+          <div className="cf-field">
+            <label className="cf-label">Email</label>
+            <input  className="cf-input" name="from_email" type="email" placeholder="your@email.com" required disabled={status === 'sending'} />
+          </div>
+          <div className="cf-field">
+            <label className="cf-label">Message</label>
+            <textarea className="cf-input cf-textarea" name="message" rows={5} placeholder="What's on your mind?" required disabled={status === 'sending'} />
+          </div>
+
+          {status === 'success' && (
+            <div className="cf-feedback success">✓ Message sent — I&apos;ll reply soon.</div>
+          )}
+          {status === 'error' && (
+            <div className="cf-feedback error">✗ {errMsg}</div>
+          )}
+
+          <button
+            className="cf-submit"
+            type="submit"
+            disabled={status === 'sending' || status === 'success'}
+            onClick={playClick}
+          >
+            {status === 'sending' ? 'Sending…' : status === 'success' ? 'Sent ✓' : 'Send Message →'}
+          </button>
+        </form>
       </div>
     </section>
   );

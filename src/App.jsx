@@ -4,7 +4,8 @@ import Navbar        from './components/Navbar.jsx';
 import HeroSection   from './components/HeroSection.jsx';
 import AIChat        from './components/AIChat.jsx';
 import LoadingScreen from './components/LoadingScreen.jsx';
-import { AboutSection, ExperienceSection, ProjectsSection, SkillsSection } from './components/Sections.jsx';
+import { AboutSection, ExperienceSection, ProjectsSection, SkillsSection, ContactSection } from './components/Sections.jsx';
+import { playClick, playOpen, isSoundOn, toggleSound } from './utils/sounds.js';
 
 export default function App() {
   const [loading,  setLoading]  = useState(true);
@@ -12,6 +13,7 @@ export default function App() {
   const [aiQuery,  setAiQuery]  = useState(null);
   const [aiMode,   setAiMode]   = useState('knowledge');
   const [theme,    setTheme]    = useState('dark');
+  const [soundOn,  setSoundOn]  = useState(isSoundOn);
 
   const handleLoadDone = useCallback(() => setLoading(false), []);
 
@@ -46,13 +48,17 @@ export default function App() {
     document.documentElement.setAttribute('data-theme', next);
   };
 
+  const handleToggleSound = () => setSoundOn(toggleSound());
+
   const openAIWithTech = (tech) => {
+    playClick();
     setAiQuery(`What is ${tech}?`);
     setAiMode('tech');
     setShowAI(true);
   };
 
   const openAI = () => {
+    playOpen();
     setAiQuery(null);
     setAiMode('knowledge');
     setShowAI(true);
@@ -78,7 +84,7 @@ export default function App() {
       <div className="film-grain" aria-hidden="true" />
 
       <SceneProvider>
-        <Navbar onOpenAI={openAI} theme={theme} onToggleTheme={toggleTheme} />
+        <Navbar onOpenAI={openAI} theme={theme} onToggleTheme={toggleTheme} soundOn={soundOn} onToggleSound={handleToggleSound} />
 
         <HeroSection onTechClick={openAIWithTech} />
 
@@ -87,6 +93,7 @@ export default function App() {
           <ExperienceSection onTechClick={openAIWithTech} />
           <ProjectsSection   onTechClick={openAIWithTech} />
           <SkillsSection     onTechClick={openAIWithTech} />
+          <ContactSection />
           <footer className="portfolio-footer">
             <div>Aditya Dey · Gen AI Engineer · aditya2002dey@gmail.com</div>
             <div style={{ marginTop: '6px', opacity: 0.6 }}>
@@ -97,7 +104,7 @@ export default function App() {
 
         {/* Mobile bottom nav */}
         <div className="mobile-controls">
-          {['about', 'experience', 'projects', 'skills'].map(id => (
+          {['about', 'experience', 'projects', 'skills', 'contact'].map(id => (
             <button
               key={id}
               className="mob-btn"

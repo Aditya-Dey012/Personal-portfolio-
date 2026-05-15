@@ -7,6 +7,7 @@ export const personal = {
   github: 'https://github.com/Aditya-Dey012',
   githubWork: 'https://github.com/adityanexturn',
   linkedin: 'https://linkedin.com/in/aditya-dey-8144b7202',
+  instagram: 'https://www.instagram.com/_mr.dey_762',
   bio: "Gen AI Engineer with hands-on experience designing multi-agent RAG pipelines, LLM-integrated analytics systems, and full-stack AI applications. Proficient in LangChain, LangGraph, FAISS, AWS, and modern data engineering tools, with a strong foundation in machine learning, deep learning, and cloud-native development.",
 };
 
@@ -193,6 +194,21 @@ export const projects = [
     figma: 'https://www.figma.com/proto/xAoHL4zSCq4xvt8ocRjmHV/app?node-id=0-1&t=zrUmH9fGvH1qhSOR-1',
     type: 'side',
   },
+];
+
+export const hobbies = [
+  'Travelling & exploring new places',
+  'Listening to music',
+  'Gaming — mostly indoor (strategy & RPGs)',
+  'Watching films & series',
+  'Sketching',
+];
+
+export const languages = [
+  { name: 'Bengali',  level: 'Native'        },
+  { name: 'English',  level: 'Fluent'        },
+  { name: 'Hindi',    level: 'Fluent'        },
+  { name: 'Mizo',     level: 'Conversational' },
 ];
 
 export const education = [

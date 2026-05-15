@@ -1,11 +1,12 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
+import { playClick, playChip } from '../utils/sounds.js';
 
 const CURRENT_KEY  = 'adbot_session';
 const SESSIONS_KEY = 'adbot_sessions';
 const LIMIT_KEY    = 'adbot_count';
 const MAX_QUESTIONS = 5;
 
-const WELCOME = `ADBOT v1.0 — Aditya's Personal AI Assistant
+const WELCOME = `ADBOT — Aditya's Personal AI Assistant
 Llama 3.1 · RAG knowledge base · Ask me anything about Aditya.`;
 
 const SUGGESTIONS = [
@@ -263,13 +264,13 @@ export default function AIChat({ onClose, initialQuery = null, initialMode = 'kn
                 ☰
               </button>
               <div>
-                <div className="ai-bot-name">◈ ADBOT v1.0</div>
+                <div className="ai-bot-name">◈ ADBOT</div>
                 <div className="ai-bot-sub">Llama 3.1 · RAG · {remaining} q left</div>
               </div>
             </div>
             <div className="ai-titlebar-actions">
-              <button className="ai-new-chat" onClick={newChat}>new chat</button>
-              <button className="ai-close" onClick={onClose}>✕</button>
+              <button className="ai-new-chat" onClick={() => { playClick(); newChat(); }}>new chat</button>
+              <button className="ai-close" onClick={() => { playClick(); onClose(); }}>✕</button>
             </div>
           </div>
 
@@ -295,7 +296,7 @@ export default function AIChat({ onClose, initialQuery = null, initialMode = 'kn
           {isFirstSession && !loading && (
             <div className="ai-suggestions">
               {SUGGESTIONS.map(s => (
-                <button key={s} className="ai-sug" onClick={() => sendMsg(s)}>{s}</button>
+                <button key={s} className="ai-sug" onClick={() => { playChip(); sendMsg(s); }}>{s}</button>
               ))}
             </div>
           )}

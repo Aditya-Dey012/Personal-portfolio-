@@ -567,6 +567,13 @@ canvas { display: block; }
 }
 .dl-resume-btn:hover { opacity: 0.88; }
 
+.about-lang-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
+.about-lang-item { display: flex; align-items: center; justify-content: space-between; }
+.about-lang-name  { font-size: 13px; color: var(--cream); }
+.about-lang-level { font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); background: var(--surface2); padding: 2px 8px; border-radius: 4px; }
+
+.about-hobbies { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
+
 /* EXPERIENCE */
 .exp-job { margin-bottom: 52px; }
 
@@ -679,6 +686,66 @@ canvas { display: block; }
 }
 
 .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+
+/* CONTACT */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 52px;
+  align-items: start;
+  margin-top: 36px;
+}
+.contact-blurb {
+  font-size: 14px;
+  color: var(--text-dim);
+  line-height: 1.75;
+  margin-bottom: 28px;
+}
+.contact-links-stack { display: flex; flex-direction: column; gap: 10px; }
+
+.contact-form { display: flex; flex-direction: column; gap: 18px; }
+.cf-field { display: flex; flex-direction: column; gap: 6px; }
+.cf-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+.cf-input {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  color: var(--cream);
+  font-family: var(--font);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.2s;
+  width: 100%;
+  box-sizing: border-box;
+}
+.cf-input:focus  { border-color: var(--orange); }
+.cf-input::placeholder { color: var(--text-muted); }
+.cf-textarea { resize: vertical; min-height: 120px; }
+.cf-feedback { font-size: 12px; font-family: var(--font-mono); padding: 8px 12px; border-radius: 5px; }
+.cf-feedback.success { background: rgba(74,222,128,0.1); color: #4ade80; border: 1px solid rgba(74,222,128,0.25); }
+.cf-feedback.error   { background: rgba(255,107,53,0.1);  color: var(--orange); border: 1px solid rgba(255,107,53,0.25); }
+.cf-submit {
+  align-self: flex-start;
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  padding: 11px 28px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+.cf-submit:hover:not(:disabled)  { opacity: 0.88; transform: translateY(-1px); }
+.cf-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+@media (max-width: 768px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+  .cf-submit     { width: 100%; justify-content: center; }
+}
 
 /* FOOTER */
 .portfolio-footer {

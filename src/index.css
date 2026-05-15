@@ -1024,6 +1024,11 @@ canvas { display: block; }
   padding: 14px 28px;
   background: linear-gradient(180deg, rgba(10,7,4,0.95) 0%, rgba(10,7,4,0) 100%);
   pointer-events: none;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
+}
+.navbar--hidden {
+  transform: translateY(-100%);
 }
 
 .navbar-left {
@@ -1526,6 +1531,29 @@ canvas { display: block; }
   border: none;
   border-top: 1px solid var(--border);
   margin: 14px 0;
+}
+
+/* ============================================================
+   SCROLL TO TOP BUTTON
+   ============================================================ */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 28px;
+  left: 24px;
+  z-index: 400;
+  width: 34px; height: 34px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-dim);
+  font-size: 14px;
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: color 0.2s, border-color 0.2s;
+}
+.scroll-top-btn:hover {
+  color: var(--orange);
+  border-color: var(--orange);
 }
 
 /* ============================================================

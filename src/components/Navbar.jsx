@@ -1,3 +1,4 @@
+import { useState, useEffect, useRef } from 'react';
 import { personal } from '../data/portfolio.js';
 import { playClick } from '../utils/sounds.js';
 
@@ -36,8 +37,21 @@ const NAV_ITEMS = [
 ];
 
 export default function Navbar({ onOpenAI, theme, onToggleTheme, soundOn, onToggleSound }) {
+  const [hidden, setHidden] = useState(false);
+  const lastY = useRef(0);
+
+  useEffect(() => {
+    const onScroll = () => {
+      const y = window.scrollY;
+      setHidden(y > lastY.current && y > 80);
+      lastY.current = y;
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   return (
-    <nav className="navbar">
+    <nav className={`navbar${hidden ? ' navbar--hidden' : ''}`}>
       {/* Left: Name + title */}
       <div className="navbar-left" onClick={() => { playClick(); window.scrollTo({ top: 0, behavior: 'smooth' }); }} style={{ cursor: 'pointer' }}>
         <div className="navbar-name">Aditya <span>Dey</span></div>

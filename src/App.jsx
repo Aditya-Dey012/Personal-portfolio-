@@ -29,6 +29,18 @@ export default function App() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  /* Show scroll-to-top from Personal Builds section onwards */
+  const [showScrollTop, setShowScrollTop] = useState(false);
+  useEffect(() => {
+    const onScroll = () => {
+      const el = document.getElementById('projects');
+      if (!el) return;
+      setShowScrollTop(window.scrollY >= el.offsetTop - 100);
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
   /* Cursor glow — direct DOM manipulation to avoid 60fps re-renders */
   const cursorRef = useRef();
   useEffect(() => {
@@ -123,6 +135,16 @@ export default function App() {
         </div>
 
         <button className="ai-fab" onClick={openAI} title="Ask ADBOT">◈</button>
+
+        {showScrollTop && (
+          <button
+            className="scroll-top-btn"
+            onClick={() => { playClick(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+            title="Back to top"
+          >
+            ↑
+          </button>
+        )}
 
         {showAI && (
           <AIChat

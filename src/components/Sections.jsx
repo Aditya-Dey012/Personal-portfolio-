@@ -1,6 +1,6 @@
 import { useRef, useCallback, useState } from 'react';
 import emailjs from '@emailjs/browser';
-import { personal, skills, experience, projects, education, hobbies, languages } from '../data/portfolio.js';
+import { personal, skills, experience, projects, education, hobbies, languages, certifications } from '../data/portfolio.js';
 import { playClick } from '../utils/sounds.js';
 import useReveal from '../hooks/useReveal.js';
 import ScrambleText from './ScrambleText.jsx';
@@ -76,8 +76,41 @@ function TechTag({ label, onTechClick, className = 'tag orange' }) {
   );
 }
 
+function CopyEmailBtn() {
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    navigator.clipboard.writeText(personal.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+    playClick();
+  };
+  return (
+    <button onClick={copy} className="copy-email-btn" title="Copy email">
+      {copied ? '✓ Copied' : '⎘ Copy'}
+    </button>
+  );
+}
+
+function ResumeViewer({ onClose }) {
+  return (
+    <div className="resume-overlay" onClick={e => e.target === e.currentTarget && onClose()}>
+      <div className="resume-modal">
+        <div className="resume-modal-bar">
+          <span>Aditya_CV.pdf</span>
+          <div style={{ display: 'flex', gap: '8px' }}>
+            <a href="/Aditya_CV.pdf" download className="resume-dl-btn">↓ Download</a>
+            <button className="resume-close-btn" onClick={onClose}>✕</button>
+          </div>
+        </div>
+        <iframe src="/Aditya_CV.pdf" className="resume-iframe" title="Aditya CV" />
+      </div>
+    </div>
+  );
+}
+
 export function AboutSection() {
   const ref = useReveal();
+  const [showResume, setShowResume] = useState(false);
   return (
     <section id="about" className="section reveal-section" ref={ref}>
       <div className="section-eyebrow">◈ About Me</div>
@@ -100,7 +133,10 @@ export function AboutSection() {
           <div style={{ marginTop: '32px' }}>
             <div className="about-card-label">Get in touch</div>
             <div className="about-contact">
-              <a href={`mailto:${personal.email}`} className="contact-link">✉ {personal.email}</a>
+              <div className="about-email-row">
+                <a href={`mailto:${personal.email}`} className="contact-link">✉ {personal.email}</a>
+                <CopyEmailBtn />
+              </div>
               <a href={personal.github}    target="_blank" rel="noreferrer" className="contact-link">⌥ github.com/Aditya-Dey012</a>
               <a href={personal.linkedin}  target="_blank" rel="noreferrer" className="contact-link">⊛ LinkedIn Profile</a>
               <a href={personal.instagram} target="_blank" rel="noreferrer" className="contact-link">◉ Instagram</a>
@@ -130,9 +166,23 @@ export function AboutSection() {
           <hr className="divider-line" style={{ margin: '20px 0' }} />
 
           <div className="about-card-label">Resume</div>
-          <a href="/Aditya_CV.pdf" target="_blank" rel="noreferrer" className="dl-resume-btn" onClick={playClick}>
-            ↓ Download Resume
-          </a>
+          <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginTop: '10px' }}>
+            <button className="dl-resume-btn" onClick={() => { playClick(); setShowResume(true); }}>⊞ View Resume</button>
+            <a href="/Aditya_CV.pdf" download className="dl-resume-btn" onClick={playClick}>↓ Download</a>
+          </div>
+
+          <hr className="divider-line" style={{ margin: '20px 0' }} />
+
+          <div className="about-card-label">Certifications</div>
+          <div style={{ marginTop: '10px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            {certifications.map(c => (
+              <div key={c.title} className="cert-item">
+                <div className="cert-title">{c.title}</div>
+                <div className="cert-meta">{c.issuer}</div>
+                <div className="cert-desc">{c.description}</div>
+              </div>
+            ))}
+          </div>
 
           <hr className="divider-line" style={{ margin: '20px 0' }} />
 
@@ -156,6 +206,7 @@ export function AboutSection() {
           </div>
         </div>
       </div>
+      {showResume && <ResumeViewer onClose={() => setShowResume(false)} />}
     </section>
   );
 }

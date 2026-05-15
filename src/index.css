@@ -567,6 +567,87 @@ canvas { display: block; }
 }
 .dl-resume-btn:hover { opacity: 0.88; }
 
+.about-email-row { display: flex; align-items: center; gap: 8px; }
+.copy-email-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.copy-email-btn:hover { border-color: var(--orange); color: var(--orange); }
+
+.cert-item { padding: 10px 12px; background: var(--surface2); border-radius: 6px; border-left: 2px solid var(--orange); }
+.cert-title { font-size: 13px; color: var(--cream); font-weight: 600; }
+.cert-meta  { font-size: 11px; color: var(--orange); font-family: var(--font-mono); margin-top: 2px; }
+.cert-desc  { font-size: 12px; color: var(--text-dim); margin-top: 6px; line-height: 1.6; }
+
+.resume-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 600;
+  background: rgba(0,0,0,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.2s ease;
+}
+.resume-modal {
+  width: 100%;
+  max-width: 860px;
+  height: 90vh;
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.resume-modal-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-dim);
+  flex-shrink: 0;
+}
+.resume-dl-btn {
+  background: var(--orange);
+  color: #fff;
+  border: none;
+  padding: 5px 14px;
+  border-radius: 5px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+}
+.resume-close-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 16px;
+  cursor: pointer;
+  padding: 2px 6px;
+}
+.resume-close-btn:hover { color: var(--cream); }
+.resume-iframe { flex: 1; border: none; width: 100%; }
+
+@media (max-width: 768px) {
+  .resume-modal { height: 95vh; border-radius: 10px 10px 0 0; }
+  .resume-overlay { padding: 0; align-items: flex-end; }
+}
+
 .about-lang-list { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; }
 .about-lang-item { display: flex; align-items: center; justify-content: space-between; }
 .about-lang-name  { font-size: 13px; color: var(--cream); }

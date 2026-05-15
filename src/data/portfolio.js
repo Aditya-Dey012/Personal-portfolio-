@@ -196,6 +196,15 @@ export const projects = [
   },
 ];
 
+export const certifications = [
+  {
+    title: 'NCC C Certificate — Air Wing',
+    issuer: 'National Cadet Corps, India',
+    year: null,
+    description: 'Highest NCC certification, awarded for completing the senior division training in the Air Wing. Demonstrates leadership, discipline, and aerospace awareness.',
+  },
+];
+
 export const hobbies = [
   'Travelling & exploring new places',
   'Listening to music',

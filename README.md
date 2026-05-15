@@ -21,7 +21,7 @@ Live portfolio built with React + Vite, featuring a 3D interactive hero, a termi
 
 - **Cinematic loading screen** — perspective grid, CRT scanlines, glitch title reveal
 - **3D hero graph** — 11 nodes (LangGraph, FAISS, Agents, etc.) with animated edges and real-time particle flow
-- **ADBOT v1.0** — RAG AI assistant powered by Groq Llama-3.1-8b-instant
+- **ADBOT** — RAG AI assistant powered by Groq Llama-3.1-8b-instant
   - Knowledge base chunked into semantic segments; relevant context retrieved per query
   - Streams responses token-by-token over SSE
   - Grounded answers — draws only from retrieved portfolio knowledge

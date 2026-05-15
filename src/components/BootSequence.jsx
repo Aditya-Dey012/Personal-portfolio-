@@ -12,7 +12,7 @@ const BOOT_LINES = [
   { text: '[    0.768] Starting services...',                      cls: '',       delay: 780 },
   { text: 'ok:langgraph-agents.service',                          cls: 'ok',     delay: 900 },
   { text: 'ok:faiss-vector-store.service',                        cls: 'ok',     delay: 1000 },
-  { text: 'ok:ai-assistant.service (ADBOT v1.0)',                 cls: 'ok',     delay: 1100 },
+  { text: 'ok:ai-assistant.service (ADBOT)',                 cls: 'ok',     delay: 1100 },
   { text: 'ok:portfolio-data.service',                            cls: 'ok',     delay: 1200 },
   { text: 'ok:matrix-rain.service',                               cls: 'ok',     delay: 1300 },
   { text: 'ok:terminal-ui.service',                               cls: 'ok',     delay: 1400 },

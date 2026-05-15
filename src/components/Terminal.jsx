@@ -50,7 +50,7 @@ export default function Terminal({ booted, theme, onToggleTheme, onToggleMatrix 
       onOpenAI:       () => {
         addOutput(trimmed, (
           <div>
-            <div className="c-green">Launching ADBOT v1.0…</div>
+            <div className="c-green">Launching ADBOT…</div>
             <div className="c-dim" style={{ fontSize: '11px', marginTop: '3px' }}>
               GPT-4o-mini · RAG knowledge base loaded · type &#39;exit&#39; to close
             </div>

@@ -243,9 +243,22 @@ export function ContactSection() {
   const formRef = useRef();
   const [status,  setStatus]  = useState('idle'); // idle | sending | success | error
   const [errMsg,  setErrMsg]  = useState('');
+  const [errors,  setErrors]  = useState({});
+
+  const validate = () => {
+    const f = formRef.current;
+    const e = {};
+    if (!f.from_name.value.trim())  e.from_name  = 'Name is required';
+    if (!f.from_email.value.trim()) e.from_email = 'Email is required';
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.from_email.value)) e.from_email = 'Enter a valid email';
+    if (!f.message.value.trim())    e.message    = 'Message is required';
+    setErrors(e);
+    return Object.keys(e).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validate()) return;
     setStatus('sending');
     try {
       await emailjs.sendForm(
@@ -287,15 +300,18 @@ export function ContactSection() {
         <form ref={formRef} className="contact-form" onSubmit={handleSubmit} noValidate>
           <div className="cf-field">
             <label className="cf-label">Name</label>
-            <input  className="cf-input" name="from_name"  type="text"  placeholder="Your name"  required disabled={status === 'sending'} />
+            <input className={`cf-input${errors.from_name ? ' cf-input-err' : ''}`} name="from_name" type="text" placeholder="Your name" disabled={status === 'sending'} onChange={() => setErrors(p => ({ ...p, from_name: '' }))} />
+            {errors.from_name  && <span className="cf-err">{errors.from_name}</span>}
           </div>
           <div className="cf-field">
             <label className="cf-label">Email</label>
-            <input  className="cf-input" name="from_email" type="email" placeholder="your@email.com" required disabled={status === 'sending'} />
+            <input className={`cf-input${errors.from_email ? ' cf-input-err' : ''}`} name="from_email" type="email" placeholder="your@email.com" disabled={status === 'sending'} onChange={() => setErrors(p => ({ ...p, from_email: '' }))} />
+            {errors.from_email && <span className="cf-err">{errors.from_email}</span>}
           </div>
           <div className="cf-field">
             <label className="cf-label">Message</label>
-            <textarea className="cf-input cf-textarea" name="message" rows={5} placeholder="What's on your mind?" required disabled={status === 'sending'} />
+            <textarea className={`cf-input cf-textarea${errors.message ? ' cf-input-err' : ''}`} name="message" rows={5} placeholder="What's on your mind?" disabled={status === 'sending'} onChange={() => setErrors(p => ({ ...p, message: '' }))} />
+            {errors.message    && <span className="cf-err">{errors.message}</span>}
           </div>
 
           {status === 'success' && (

@@ -722,6 +722,8 @@ canvas { display: block; }
 .cf-input:focus  { border-color: var(--orange); }
 .cf-input::placeholder { color: var(--text-muted); }
 .cf-textarea { resize: vertical; min-height: 120px; }
+.cf-input-err { border-color: #f87171 !important; }
+.cf-err { font-size: 11px; color: #f87171; font-family: var(--font-mono); margin-top: 2px; }
 .cf-feedback { font-size: 12px; font-family: var(--font-mono); padding: 8px 12px; border-radius: 5px; }
 .cf-feedback.success { background: rgba(74,222,128,0.1); color: #4ade80; border: 1px solid rgba(74,222,128,0.25); }
 .cf-feedback.error   { background: rgba(255,107,53,0.1);  color: var(--orange); border: 1px solid rgba(255,107,53,0.25); }

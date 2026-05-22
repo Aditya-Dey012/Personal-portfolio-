@@ -203,11 +203,20 @@ development, and building full-stack AI applications from scratch to production 
   },
   {
     id: 'projects-side',
-    tags: ['project', 'side', 'personal', 'github', 'movie', 'emotion', 'music', 'text', 'detection', 'calculator', 'dictionary', 'recommendation', 'ocr', 'streamlit', 'tmdb', 'opencv', 'nlp', 'cosine'],
+    tags: ['project', 'side', 'personal', 'github', 'movie', 'emotion', 'music', 'text', 'detection', 'calculator', 'dictionary', 'recommendation', 'ocr', 'streamlit', 'tmdb', 'opencv', 'nlp', 'cosine', 'llm', 'benchmark', 'ollama', 'langsmith', 'evaluation', 'hallucination', 'prompt', 'cinema', 'instagram', 'gemini'],
     content: `
 SIDE PROJECTS (Personal / Academic)
 
-1. Prompt Optimization Engine
+1. LLM Benchmark Dashboard
+   Stack: FastAPI · React · TypeScript · Ollama · LangSmith · SQLite · sentence-transformers · Recharts
+   GitHub: https://github.com/Aditya-Dey012/LLM-benchmark-dashboard
+   Side-by-side evaluation platform for 5 local LLMs — Gemma 2B, Phi-3 Mini, DeepSeek Coder 6.7B,
+   Mistral 7B, Llama 3.1 8B — all running via Ollama at zero API cost. Auto-scores each response on
+   relevancy, faithfulness, and hallucination rate using MiniLM embeddings. Full LangSmith trace per
+   run, real-time progress in a React + TypeScript dashboard with Recharts visualisation, and SQLite
+   persistence.
+
+2. Prompt Optimization Engine
    Stack: MLflow · LangChain · FastAPI · SQLite · Plotly
    LLMOps system that auto-rewrites and evaluates LLM prompts using the MLflow GEPA (Generative
    Prompt Auto-optimization) optimizer. Tracks prompt versions, token usage, latency, and cost
